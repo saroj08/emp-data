@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>table data</title>
+	<script src="angular.min.js"></script>
+	<script src="jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+</head>
+<body ng-app="myapp" ng-controller="ctrl">
+<table class="table table-bordered table-striped">
+<tr>
+	<th>serial.no</th>
+	<th>name</th>
+	<th>country</th>
+	<th>edit/del</th>
+</tr>
+<tr ng-repeat="a in data">
+<td>{{$index+1}}</td>
+<td>{{a.name}}</td>
+<td>{{a.country}}</td>
+<td><button class="btn btn-ripple" ng-click="edit(a)" >edit</button>&nbsp;<button class="btn btn-ripple">del</button></td></tr></table>
+<button  ng-click="new(a)">add</button>
+<form name="myform" ng-hide="get" class="form-horizontal" id="edit"> 
+<h3 ng-hide="edit">edit form</h3>
+<h3 ng-show="edit">add form</h3>
+<div class="form-group ">
+	<label for="myform.name" class="col-md-2 control-label">name</label>
+	<div class=" col-md-6">
+	<input type="text" name="myform.name" ng-model="selected.name" class="form-control" placeholder="name"></div>
+</div>
+<div class="form-group">
+	<label for="myform.country" class="col-md-2 control-label">country</label>
+	<div class="col-md-6">
+	<input type="text" name="myform.country" ng-model="selected.cntry" class="form-control" placeholder="country"></div>
+</div>
+<!-- <button class="col-md-offset-2 " ng-click="name=a.name&&cntry=a.country && savme(a,name,cntry)" ng-hide="save" >save&nbsp;</button>
+ -->
+ <button class="col-md-offset-2 " ng-click="savme($index,selected.name,selected.cntry)" ng-hide="save" >save&nbsp;</button>
+<button  ng-click="addme()" class="col-md-offset-2 "  ng-hide="add" >add</button>
+</form>
+
+<script>
+	var app=angular.module("myapp",[]);
+	app.controller("ctrl",function($scope)
+	{
+     $scope.data=[{id:1,name:"saroj",country:"india"},{id:2,name:"manoj",country:"us"},
+     {id:3,name:"dinesh",country:"uk"},{id:4,name:"kkr",country:"aus"}]
+     $scope.selected={};
+     $scope.get=true;
+     $scope.name="";
+     $scope.cntry="";
+     $scope.edit=true;
+     $scope.save=true;
+     $scope.add=true;
+     $scope.edit=function(a)
+     {
+     	$scope.get=false;
+     	$scope.edit=false;
+     	$scope.save=false;
+     	 $scope.selected.name=a.name;
+     	 $scope.selected.cntry=a.country;
+         console.log(a);
+     	// $scope.select();
+        // if (a.id === $scope.selected.id) return 'edit';
+        // else
+        //     {};
+       // $scope.select= angular.copy($scope.selected);
+     }
+     // $scope.select=function()
+     // {
+     // 	$scope.selected.name=$scope.name;
+     // 	$scope.selected.country=$scope.cntry;
+     // }
+      $scope.new=function(a)
+     {
+     $scope.get=false;
+     	$scope.edit=true;
+     	$scope.add=false;
+       // $scope.selected = angular.copy(a);
+    		
+     }
+     $scope.savme=function(idx,k,v)
+     {
+
+       //a.name=name;
+        //a.country=cntry;
+        // $scope.data.name= $scope.data.replace(a.name,$scope.name);
+   // $scope.data.country= $scope.data.replace(a.name,$scope.cntry)
+       console.log("saving");
+       console.log(k);
+       console.log(v);
+
+      // $scope.data.name = angular.copy($scope.select.name);
+       //$scope.data.country = angular.copy($scope.select.cntry);
+      $scope.data[idx].name=k;
+     $scope.data[idx].country=v;
+      console.log(data.name);
+
+        $scope.reset();
+     }
+ $scope.reset = function () {
+        $scope.selected = {};
+    };
+     
+     $scope.addme=function()
+     {
+     	
+     	if($scope.data.indexOf($scope.name)== -1 && $scope.data.indexOf($scope.cntry)== -1)
+     	{
+     		$scope.data.push({'name':$scope.selected.name,'country':$scope.selected.cntry});
+     		
+            $scope.selected.name="";
+            $scope.selected.cntry="";
+     	}
+     	else
+     	{
+     		alert("already exit;")
+     	}
+     }
+	});
+	//https://jsfiddle.net/benfosterdev/UWLFJ/
+
+</script>
+
+</body>
+</html>
