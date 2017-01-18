@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>com</title>
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="myapp">
+<div ng-controller="ctrl1">
+	<input type="text" ng-model="alpha.fact">
+	{{alpha.fact}}
+</div>
+<div ng-controller="ctrl2">
+	<input type="text" ng-model="beta.fact">
+	{{beta.fact}}
+</div>
+<script>
+	var app=angular.module("myapp",[]);
+	app.factory("fservice",function()
+	{
+		
+		
+			var fact={};
+		return fact;
+	});
+	app.controller("ctrl1",function($scope,fservice)
+	{
+      $scope.alpha=fservice;
+      $scope.$watch("alpha",function(newvalue,oldvalue)
+      {
+      	console.log(newvalue);
+      })
+	});
+	app.controller("ctrl2",function($scope,fservice)
+	{
+      $scope.beta=fservice;
+	});
+
+</script>
+
+
+</body>
+</html>
